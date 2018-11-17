@@ -23,7 +23,7 @@
   </nav>
   <div class="container">
     <h1>
-      priorities
+      Priorities
     </h1>
     <form onsubmit="return addNewPriority(event)">
       <div class="form-group">
@@ -67,10 +67,13 @@
       currentPriority = event.target.value
     }
 
-    function priorityLevelChange(event){
-      console.log(event.target.value)
-      currentPriorityLevel = event.target.value
-    }
+    // This code is not needed because I commented out the priority leve
+    // button above in html. This code will be deleted later
+
+    // function priorityLevelChange(event){
+    //   console.log(event.target.value)
+    //   currentPriorityLevel = Number(event.target.value) // coerce event.target.value to become a number instead of an string in some cases.
+    // }
 
     function makeHigherPriority(name) {
       var priority = priorities.find(p => p.name === name)
@@ -100,12 +103,14 @@
       var currentPriorities = priorities
         .sort((x,y) => x.level - y.level)
         .map(x => {
+          var makeHigherDisabled = x.level === 1 ? "disabled": ""
+          var makeLowerDisabled = x.level === priorities.length ? "disabled": ""
           return `<li class="list-group-item">
           <span class="badge badge-primary badge-pill"> ${x.level} </span>
           <span>${x.name}</span>
           <span class="float-buttons">
-            <button onclick="return makeHigherPriority('${x.name}')" type="button" class="btn btn-sm btn-outline-primary">Make Higher Priority</button>
-            <button onclick="return makeLowerPriority('${x.name}')" type="button" class="btn btn-sm btn-outline-secondary">Make Lower Priority</button>
+            <button ${makeHigherDisabled} onclick="return makeHigherPriority('${x.name}')" type="button" class="btn btn-sm btn-outline-primary">Make Higher Priority</button>
+            <button ${makeLowerDisabled} onclick="return makeLowerPriority('${x.name}')" type="button" class="btn btn-sm btn-outline-secondary">Make Lower Priority</button>
           </span>
           </li>`
         })
@@ -115,6 +120,37 @@
 
     drawPriorities()
 
+
+  </script>
+
+  <script>
+    // var mapPractice = [1,2,3]
+    // function callback(e){
+    //   return e + 1 
+    // }
+    // var newArray = mapPractice.map(callback)
+    // console.log(newArray)
+
+    // var mapPractice = ['joseph', 'trinity', 'ibaka', 'pascow']
+    // function callback(e){
+    //   return "Hello " + e 
+    // }
+    // var newArray = mapPractice.map(callback)
+    // console.log(newArray)
+
+    // var mapPractice = [{name: 'joseph'}, {name: 'trinity'}, {name: 'ibaka'}, {name: 'pascow'}]
+    // function callback(e){
+    //   return "Hello " + e.name 
+    // }
+    // var newArray = mapPractice.map(callback)
+    // console.log(newArray)
+
+    var filterPractice = [{name: 'joseph'}, {name: 'trinity'}, {name: 'ibaka'}, {name: 'pascow'}]
+    function callback(e){
+      return e.name != 'joseph' 
+    }
+    var newArray = filterPractice.filter(callback)
+    console.log(newArray)
 
   </script>
 </body>
