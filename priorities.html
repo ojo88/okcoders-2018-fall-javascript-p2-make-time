@@ -74,11 +74,13 @@
 
     function makeHigherPriority(name) {
       var priority = priorities.find(p => p.name === name)
+      var shiftPriority = priorities.find(s => s.level === priority.level - 1)
       if(priority.level != 1)
       {
+        shiftPriority.level = shiftPriority.level + 1
         priority.level = priority.level - 1
+        drawPriorities()
       }
-      drawPriorities()
     }
 
     function makeLowerPriority(name) {
