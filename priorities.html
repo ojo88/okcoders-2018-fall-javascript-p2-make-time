@@ -29,6 +29,7 @@
       <div class="form-group">
         <label for="exampleInputEmail1">Priority</label>
         <input type="text" class="form-control" onchange="return priorityChange(event)" id="exampleInputPriority1" placeholder="Enter a priority.... like Family">
+        <input type="reset" id="clearText">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -44,17 +45,28 @@
     var firstPriorityLevel = 1
     var priorities = []
     var length = 0;
+    $('#clearText').hide()
+
+    function clearTextBox() {
+      // var textBox = $('#exampleInputPriority1')
+
+      // textBox.append('<input type="reset" id="clearText">');
+      $('#clearText').click();
+
+    }
     function addNewPriority(event){
       if(priorities[0] == undefined)
       {
         priorities.push({name: currentPriority, level: firstPriorityLevel})
         drawPriorities()
+        clearTextBox()
         return false;
       }
 
       priorities.push({name: currentPriority, level: currentPriorityLevel});
       drawPriorities()
       currentPriorityLevel++;
+      clearTextBox()
       return false;
     }
 
