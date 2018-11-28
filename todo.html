@@ -1,0 +1,108 @@
+
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>make-time</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="./todo.css">
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Make Time</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" href="/#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="priorities.html">priorities</a>
+        <a class="nav-item nav-link active" href="todo.html">To Do Today</a>
+        <a class="nav-item nav-link" href="past">Past Days</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <h1>
+      To Do Items
+    </h1>
+    <form onsubmit="return addNewToDo(event)">
+      <div class="form-group">
+        <input type="text" class="form-control" onchange="return toDoChange(event)" id="inputToDo" placeholder="Enter a to-do item.... like do OkCoders homework">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <ul id="toDo-list" class="list-group"> </ul>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script>
+    var currentToDo = ""
+    var toDos = [{name: 'chicken', level: 1}]
+    function addNewToDo(event){
+      var nextToDoLevel = toDos.length + 1
+      toDos.push({name: currentToDo, level: nextToDoLevel})
+      drawToDos()
+      return false;
+    }
+
+    function toDoChange(event){
+      currentToDo = event.target.value
+    }
+
+    function makeHigherToDo(name) {
+      var toDo = toDos.find(p => p.name === name)
+      var currentLevel = toDo.level
+      var siblingToDo = toDos.find(p => p.level === currentLevel - 1)
+      siblingToDo.level = currentLevel
+      if (toDo.level > 1) {
+        toDo.level = toDo.level - 1
+      }
+
+      drawToDos()
+    }
+
+    function makeLowerToDo(name) {
+      var toDo = toDos.find(p => p.name === name)
+      var currentLevel = toDo.level
+      var siblingToDo = toDos.find(p => p.level === currentLevel + 1)
+      siblingToDo.level = currentLevel
+      toDo.level = toDo.level + 1
+
+      drawToDos()
+    }
+
+    function drawToDos() {
+      var list = document.getElementById("toDo-list")
+      var currentToDos = toDos
+        .sort((x,y) => x.level - y.level)
+        .map(x => {
+          var disabledHigher = x.level === 1 ? 'disabled': ''
+          var disabledLower = x.level === toDos.length ? 'disabled': ''
+          return `<li class="list-group-item">
+          <span class="badge badge-primary badge-pill"> ${x.level} </span>
+          <span>${x.name}</span>
+          <span class="float-buttons">
+            <button ${disabledHigher} onclick="return makeHigherToDo('${x.name}')" 
+              type="button" class="btn btn-sm
+              btn-outline-primary">Make Higher To-Do Item
+            </button>
+            <button ${disabledLower} onclick="return makeLowerToDo('${x.name}')"
+              type="button" class="btn btn-sm btn-outline-secondary">Make Lower
+              To-Do Item
+            </button>
+          </span>
+          </li>`
+        })
+        .join("")
+      list.innerHTML = currentToDos
+    }
+
+    drawToDos()
+
+
+  </script>
+</body>
+</html>
