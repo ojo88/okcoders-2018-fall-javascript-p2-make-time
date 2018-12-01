@@ -41,6 +41,7 @@
   <script>
     var currentToDo = ""
     var toDos = [{name: 'chicken', level: 1}]
+    var test = ""
     function addNewToDo(event){
       var nextToDoLevel = toDos.length + 1
       toDos.push({name: currentToDo, level: nextToDoLevel})
@@ -73,6 +74,12 @@
 
       drawToDos()
     }
+    function strikeDisable(name) {
+      // var selectedTodo = toDos.find(p => p.name === name)
+      $('#strike').css("text-decoration", "line-through");
+      //$("span[class='badge badge-primary badge-pill']").next().hide();
+      test = name;
+    }
 
     function drawToDos() {
       var list = document.getElementById("toDo-list")
@@ -81,9 +88,10 @@
         .map(x => {
           var disabledHigher = x.level === 1 ? 'disabled': ''
           var disabledLower = x.level === toDos.length ? 'disabled': ''
+          var strike = x.name === test ? 'id=strike': ''
           return `<li class="list-group-item">
           <span class="badge badge-primary badge-pill"> ${x.level} </span>
-          <span>${x.name}</span>
+          <span ${strike}>${x.name}</span>
           <span class="float-buttons">
             <button ${disabledHigher} onclick="return makeHigherToDo('${x.name}')" 
               type="button" class="btn btn-sm
@@ -93,6 +101,7 @@
               type="button" class="btn btn-sm btn-outline-secondary">Make Lower
               To-Do Item
             </button>
+            <button onclick="strikeDisable('${x.name}')" type="button" class="btn btn-sm btn-outline-success">Completed</button>
           </span>
           </li>`
         })
