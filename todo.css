@@ -1,5 +1,11 @@
-
-
-.float-buttons {
- float: right;
-}
+.highlight {
+    background-color: #ffeb3b5e;
+  }
+  
+  .hide-alert {
+      display: none;
+  }
+  
+  .float-buttons {
+   float: right;
+  }
