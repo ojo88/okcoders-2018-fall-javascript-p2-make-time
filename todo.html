@@ -34,6 +34,8 @@
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <div id="progressBarId" class="progress"></div>
+    <br>
     <ul id="toDo-list" class="list-group"> </ul>
   </div>
 
@@ -69,6 +71,7 @@
       var clickedOnName = event.target.value
       var toDoClickedOn = toDos.find(t => t.name === clickedOnName)
       toDoClickedOn.completed = !toDoClickedOn.completed
+      drawToDos()
     }
 
     function makeHighlight(name) {
@@ -138,6 +141,11 @@
         })
         .join("")
       list.innerHTML = currentToDos
+
+      var progressNumber = (toDos.filter(t => t.completed === true).length / toDos.length) * 100
+      var progressBar = `<div class="progress-bar" role="progressbar" style="width: ${progressNumber}%" aria-valuenow="${progressNumber}" aria-valuemin="0" aria-valuemax="100"></div>`
+      var progress = document.getElementById("progressBarId")
+      progress.innerHTML = progressBar
     }
 
     drawToDos()
