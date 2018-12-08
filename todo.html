@@ -123,6 +123,15 @@
           <div class="form-check form-check-inline">
             <input ${checked} onchange="return checkboxChange(event)" value="${x.name}" class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
           </div>
+          <span class="form-group">
+            <label for="exampleFormControlSelect1">Priortiy Tags</label>
+              <select class="form-control" id="exampleFormControlSelect1">
+                <option>Family</option>
+                <option>Friends</option>
+                <option>Study for OKCoders</option>
+              </select>
+          </span>
+          <br>
           <span class="float-buttons">
             <button ${disabledHighlight} onclick="return makeHighlight('${x.name}')" 
               type="button" class="btn btn-sm
