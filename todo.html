@@ -45,14 +45,16 @@
     var toDos = []
     function addNewToDo(event){
       var alreadyHaveToDo = toDos.find(p => p.name === currentToDo)
+      var alertToggle = document.getElementById("duplicate")
       if(alreadyHaveToDo)
       {
-        //drawToDos()
+        alertToggle.className = "alert alert-warning"
         return false;
       }
       else
       {
         var nextToDoLevel = toDos.length + 1
+        alertToggle.className = "alert alert-warning hide-alert"
         toDos.push({name: currentToDo, level: nextToDoLevel, completed: false, highlight: false})
         drawToDos()
         return false;
